@@ -1,0 +1,61 @@
+-------------------------------------------------------------------------------
+Analog Devices AD5592R
+-------------------------------------------------------------------------------
+
+This is a set of example captures of an Analog Devices AD5592R 12-bit 
+configurable ADC/DAC.
+
+Details:
+https://www.analog.com/media/en/technical-documentation/data-sheets/ADXL345.pdf
+
+
+Logic analyzer setup
+--------------------
+
+The logic analyzer used was ADALM2000 (at 5MHz):
+
+    Probe       AD5592R 
+    --------------------
+    Pin 0           CS#
+    Pin 1          MOSI
+    Pin 2          MISO
+    Pin 3           CLK    
+
+
+SPI decoder settings
+--------------------
+    CS   -> Active Low
+    CPOL -> 1
+    CPHA -> 0
+
+
+Probing
+-------
+
+The sigrok command line used was:
+
+	sigrok-cli -i - -I binary:numchannels=16:samplerate=5mhz -o <file>.sr -C 0=cs,1=mosi,2=miso,3=clk
+
+The m2kcli command line used was:
+
+	m2kcli digital auto -c buffer_size=500000 nb_samples=4000000 format=binary
+
+
+ad5592r_iio_info.sr
+-------------------
+m2kcli digital auto -c buffer_size=500000 nb_samples=4000000 format=binary | sigrok-cli -i - -I binary:numchannels=16:samplerate=5mhz -o ad5592r_iio_info.sr -C 0=cs,1=mosi,2=miso,3=clk
+
+ad5592r_pyadi_example.sr
+-------------------
+m2kcli digital auto -c buffer_size=500000 nb_samples=4000000 format=binary | sigrok-cli -i - -I binary:numchannels=16:samplerate=5mhz -o ad5592r_pyadi_example.sr -C 0=cs,1=mosi,2=miso,3=clk
+
+
+ad5592r_ADC.sr
+-------------------
+m2kcli digital auto -c buffer_size=500000 nb_samples=4000000 format=binary | sigrok-cli -i - -I binary:numchannels=16:samplerate=5mhz -o ad5592r_ADC.sr -C 0=cs,1=mosi,2=miso,3=clk
+
+
+ad5592r_DAC.sr
+-------------------
+m2kcli digital auto -c buffer_size=500000 nb_samples=4000000 format=binary | sigrok-cli -i - -I binary:numchannels=16:samplerate=5mhz -o ad5592r_DAC.sr -C 0=cs,1=mosi,2=miso,3=clk
+
